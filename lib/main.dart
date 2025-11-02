@@ -30,7 +30,7 @@ class CVPage extends StatelessWidget {
         padding: EdgeInsets.all(12),
         child: Column(
           children: [
-            // الصورة والعنوان
+            //
             Container(
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
