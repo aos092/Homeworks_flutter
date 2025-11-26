@@ -1,182 +1,92 @@
 import 'package:flutter/material.dart';
+import 'Indexpage.dart';
 
 void main() {
-  runApp(ProfileApp());
+  runApp(const MyApp());
 }
 
-class ProfileApp extends StatelessWidget {
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        scaffoldBackgroundColor: Colors.grey[100],
+        primarySwatch: Colors.blue,
+        fontFamily: 'Amiri',
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CVPage(),
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child!,
+        );
+      },
+      home: const FirstPage(),
     );
   }
 }
 
-class CVPage extends StatelessWidget {
+class FirstPage extends StatelessWidget {
+  const FirstPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('CV - Abdullah Subih'),
-        centerTitle: true,
+        title: Text('Main Menu'),
+        backgroundColor: Colors.blueGrey,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(12),
-        child: Column(
-          children: [
-            //
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.deepOrange,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('pics/profileimg.png'),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Abdullah Subih',
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    'Application Developer',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white70,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.email, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        'aosubih@gmail.com',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.phone, color: Colors.white),
-                      SizedBox(width: 8),
-                      Text(
-                        '+967 772627092',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-
-            SizedBox(height: 16),
-
-            // المؤهلات
-            CVSection(
-              title: 'المؤهلات العلمية والعملية',
-              items: [
-                CVItem(Icons.school,
-                    'بكالوريوس علوم حاسوب - جامعة سيئون (2025)'),
-                CVItem(Icons.work,
-                    'مدير نادي طلاب جامعيين بحافة بلفقيه'),
-                CVItem(Icons.code, 'خبرة في تصميم الشخصيات'),
-              ],
-            ),
-
-            // المهارات
-            CVSection(
-              title: 'المهارات',
-              items: [
-                CVItem(Icons.check_circle, 'تطوير مواقع ويب'),
-                CVItem(Icons.check_circle, 'تصميم الجرافيك'),
-                CVItem(Icons.check_circle, 'تصميم واجهات المستخدم UI/UX'),
-                CVItem(Icons.check_circle, 'العمل الجماعي وحل المشكلات'),
-              ],
-            ),
-
-            // اللغات
-            CVSection(
-              title: 'اللغات',
-              items: [
-                CVItem(Icons.language, 'العربية - اللغة الأم'),
-                CVItem(Icons.language, 'الإنجليزية - مستوى جيد جدًا'),
-              ],
-            ),
-          ],
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+             /* _buildNavigationButton(context, 'Single Child', Colors.teal, Icons.child_care, SingleChild()),
+              _buildNavigationButton(context, 'CV', Colors.red, Icons.picture_as_pdf, CV()),
+              _buildNavigationButton(context, 'List', Colors.green, Icons.list, Listview()),
+              _buildNavigationButton(context, 'ListView Builder', Colors.orange, Icons.view_list, Listviewbuilder()),
+              _buildNavigationButton(context, 'Text Field', Colors.blue, Icons.text_fields, Textfild()),*/
+              _buildNavigationButton(context, 'Bottom Nav', Colors.purple, Icons.navigation, Indexpage()),
+            ],
+          ),
         ),
       ),
     );
   }
-}
 
-class CVSection extends StatelessWidget {
-  final String title;
-  final List<CVItem> items;
-
-  CVSection({required this.title, required this.items});
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _buildNavigationButton(BuildContext context, String title, Color color, IconData icon, Widget page) {
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 3,
-      margin: EdgeInsets.symmetric(vertical: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepOrange,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      elevation: 5,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => page),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(icon, color: Colors.white, size: 30),
+              Text(
+                title,
+                style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
-            SizedBox(height: 10),
-            ...items.map((item) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4.0),
-              child: Row(
-                children: [
-                  Icon(item.icon, color: Colors.deepOrange),
-                  SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      item.text,
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ),
-                ],
-              ),
-            )),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class CVItem {
-  final IconData icon;
-  final String text;
 
-  CVItem(this.icon, this.text);
-}
