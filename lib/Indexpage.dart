@@ -1,10 +1,8 @@
-
-import 'Accountpage.dart';
-import 'Homepage.dart';
-import 'Settingpage.dart';
 import 'package:flutter/material.dart';
-
+import 'Homepage.dart';
 import 'Searchpage.dart';
+import 'Settingpage.dart';
+import 'Accountpage.dart';
 
 class Indexpage extends StatefulWidget {
   const Indexpage({super.key});
@@ -14,53 +12,57 @@ class Indexpage extends StatefulWidget {
 }
 
 class _IndexpageState extends State<Indexpage> {
-  int _bottomNavbar=0;
-  List<Widget>_pages=[
+  int _current = 0;
+
+  List<Widget> pages = [
     Homepage(),
     Searchpage(),
     Settingpage(),
     Accountpage(),
-
   ];
-  String _gettitle(int index){
-    switch (index){
+
+  String getTitle() {
+    switch (_current) {
       case 0:
-        return 'الصفحة الرئيسية';
+        return "الصفحة الرئيسية";
       case 1:
-        return 'صفحة البحث';
+        return "صفحة البحث";
       case 2:
-        return 'صفحة الاعدادات';
+        return "صفحة الإعدادات";
       case 3:
-        return 'صفحة الحساب';
-      default :
-        return 'data';
+        return "صفحة الحساب";
+      default:
+        return "";
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(title: Text(_gettitle(_bottomNavbar)),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(getTitle()),
         backgroundColor: Colors.blueGrey,
+      ),
 
-      ),
       body: IndexedStack(
-        index: _bottomNavbar,
-        children:_pages ,
+        index: _current,
+        children: pages,
       ),
+
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _bottomNavbar,
-        onTap: (index){
+        currentIndex: _current,
+        selectedItemColor: Colors.blue[800],
+        unselectedItemColor: Colors.grey,
+        onTap: (i) {
           setState(() {
-            _bottomNavbar=index;
+            _current = i;
           });
         },
-        unselectedItemColor: Colors.grey[600],
-        selectedItemColor: Colors.blue[800],
-        items: [
-          BottomNavigationBarItem(label: 'الرئيسية', icon: Icon(Icons.home)),
-          BottomNavigationBarItem(label: 'البحث', icon: Icon(Icons.search)),
-          BottomNavigationBarItem(label: 'الاعدادات', icon: Icon(Icons.settings)),
-          BottomNavigationBarItem(label: 'الحساب', icon: Icon(Icons.account_box)),
+        items: const [
+          BottomNavigationBarItem(label: "الرئيسية", icon: Icon(Icons.home)),
+          BottomNavigationBarItem(label: "البحث", icon: Icon(Icons.search)),
+          BottomNavigationBarItem(label: "الإعدادات", icon: Icon(Icons.settings)),
+          BottomNavigationBarItem(label: "الحساب", icon: Icon(Icons.account_box)),
         ],
       ),
     );
